@@ -105,7 +105,7 @@ public class JWTRefreshEndpoint extends AssignmentEndpoint {
       return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
     }
     try {
-      Jwt jwt = Jwts.parser().setSigningKey(JWT_PASSWORD).parse(token.replace("Bearer ", ""));
+      Jwt jwt = Jwts.parser().setSigningKey(JWT_PASSWORD).parseClaimJws(token.replace("Bearer ", ""));
       Claims claims = (Claims) jwt.getBody();
       String user = (String) claims.get("user");
       if ("Tom".equals(user)) {
@@ -153,17 +153,4 @@ public class JWTRefreshEndpoint extends AssignmentEndpoint {
       return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
     }
   }
-    public void encode(){
-  
-      Jwts.builder()
-          .setSubject(USER_LOGIN)
-          .signWith(SignatureAlgorithm.HS256, SECRET_KEY)
-          .compact();
-    }
-   public void decode(){
-      JWTS.parser()
-          .setSigningKey(SECRET_KEY)
-          .parseClaimJws(token)
-          .getBody();
-    }
 }
