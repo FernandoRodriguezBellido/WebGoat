@@ -95,7 +95,18 @@ public class JWTRefreshEndpoint extends AssignmentEndpoint {
     tokenJson.put("refresh_token", refreshToken);
     return tokenJson;
   }
-
+  public void encode(){
+      Jwts.builder()
+          .setSubject(USER_LOGIN)
+          .signWith(SignatureAlgorith.HS256, SECRET_KEY)
+          .compact();
+  }
+  public void decode(){
+      JWTS.parser()
+          .setSigningKey(SECRET_KEY)
+          .parseClaimJws(token)
+          .getBody();
+  }
   @PostMapping("/JWT/refresh/checkout")
   @ResponseBody
   public ResponseEntity<AttackResult> checkout(
