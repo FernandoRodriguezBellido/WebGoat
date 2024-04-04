@@ -157,7 +157,7 @@ public class JWTRefreshEndpoint extends AssignmentEndpoint {
   
       Jwts.builder()
           .setSubject(USER_LOGIN)
-          .signWith(SignatureAlgorith.HS256, SECRET_KEY)
+          .signWith(SignatureAlgorithm.HS256, SECRET_KEY)
           .compact();
     }
    public void decode(){
