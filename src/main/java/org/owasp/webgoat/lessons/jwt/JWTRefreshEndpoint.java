@@ -57,19 +57,6 @@ import org.springframework.web.bind.annotation.RestController;
   "jwt-refresh-hint4"
 })
     
- public void encode(){
-  
-      Jwts.builder()
-          .setSubject(USER_LOGIN)
-          .signWith(SignatureAlgorith.HS256, SECRET_KEY)
-          .compact();
-  }
-  public void decode(){
-      JWTS.parser()
-          .setSigningKey(SECRET_KEY)
-          .parseClaimJws(token)
-          .getBody();
-  }
 public class JWTRefreshEndpoint extends AssignmentEndpoint {
 
   public static final String PASSWORD = "bm5nhSkxCXZkKRy4";
@@ -142,6 +129,19 @@ public class JWTRefreshEndpoint extends AssignmentEndpoint {
       @RequestBody(required = false) Map<String, Object> json) {
     if (token == null || json == null) {
       return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+    }
+   public void encode(){
+  
+      Jwts.builder()
+          .setSubject(USER_LOGIN)
+          .signWith(SignatureAlgorith.HS256, SECRET_KEY)
+          .compact();
+    }
+   public void decode(){
+      JWTS.parser()
+          .setSigningKey(SECRET_KEY)
+          .parseClaimJws(token)
+          .getBody();
     }
 
     String user;
