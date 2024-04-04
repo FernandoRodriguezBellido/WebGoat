@@ -28,7 +28,7 @@ import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.Header;
 import io.jsonwebtoken.JwtException;
-import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.Jwt;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
