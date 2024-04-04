@@ -130,19 +130,7 @@ public class JWTRefreshEndpoint extends AssignmentEndpoint {
     if (token == null || json == null) {
       return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
     }
-   public void encode(){
-  
-      Jwts.builder()
-          .setSubject(USER_LOGIN)
-          .signWith(SignatureAlgorith.HS256, SECRET_KEY)
-          .compact();
-    }
-   public void decode(){
-      JWTS.parser()
-          .setSigningKey(SECRET_KEY)
-          .parseClaimJws(token)
-          .getBody();
-    }
+   
 
     String user;
     String refreshToken;
@@ -165,4 +153,17 @@ public class JWTRefreshEndpoint extends AssignmentEndpoint {
       return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
     }
   }
+    public void encode(){
+  
+      Jwts.builder()
+          .setSubject(USER_LOGIN)
+          .signWith(SignatureAlgorith.HS256, SECRET_KEY)
+          .compact();
+    }
+   public void decode(){
+      JWTS.parser()
+          .setSigningKey(SECRET_KEY)
+          .parseClaimJws(token)
+          .getBody();
+    }
 }
