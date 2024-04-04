@@ -23,7 +23,7 @@
 package org.owasp.webgoat.lessons.jwt;
 
 import static org.springframework.http.ResponseEntity.ok;
-
+import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.Header;
@@ -95,12 +95,15 @@ public class JWTRefreshEndpoint extends AssignmentEndpoint {
     tokenJson.put("refresh_token", refreshToken);
     return tokenJson;
   }
+  import io.jsonwebtoken.Jwts;
   public void encode(){
+  
       Jwts.builder()
           .setSubject(USER_LOGIN)
           .signWith(SignatureAlgorith.HS256, SECRET_KEY)
           .compact();
   }
+  import io.jsonwebtoken.Jwts;
   public void decode(){
       JWTS.parser()
           .setSigningKey(SECRET_KEY)
