@@ -23,13 +23,12 @@
 package org.owasp.webgoat.lessons.jwt;
 
 import static org.springframework.http.ResponseEntity.ok;
-
+import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.Header;
-import io.jsonwebtoken.Jwt;
 import io.jsonwebtoken.JwtException;
-import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.Jwt;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -56,10 +55,11 @@ import org.springframework.web.bind.annotation.RestController;
   "jwt-refresh-hint3",
   "jwt-refresh-hint4"
 })
+    
 public class JWTRefreshEndpoint extends AssignmentEndpoint {
 
   public static final String PASSWORD = "bm5nhSkxCXZkKRy4";
-  private static final String JWT_PASSWORD = "bm5n3SkxCX4kKRy4";
+  private static final String JWT_PASSWORD = System.getenv("SECRETO");
   private static final List<String> validRefreshTokens = new ArrayList<>();
 
   @PostMapping(
@@ -95,7 +95,7 @@ public class JWTRefreshEndpoint extends AssignmentEndpoint {
     tokenJson.put("refresh_token", refreshToken);
     return tokenJson;
   }
-
+  
   @PostMapping("/JWT/refresh/checkout")
   @ResponseBody
   public ResponseEntity<AttackResult> checkout(
@@ -104,7 +104,7 @@ public class JWTRefreshEndpoint extends AssignmentEndpoint {
       return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
     }
     try {
-      Jwt jwt = Jwts.parser().setSigningKey(JWT_PASSWORD).parse(token.replace("Bearer ", ""));
+      Jwt jwt = Jwts.parser().setSigningKey(JWT_PASSWORD).parseClaimsJws(token.replace("Bearer ", ""));
       Claims claims = (Claims) jwt.getBody();
       String user = (String) claims.get("user");
       if ("Tom".equals(user)) {
@@ -129,6 +129,7 @@ public class JWTRefreshEndpoint extends AssignmentEndpoint {
     if (token == null || json == null) {
       return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
     }
+   
 
     String user;
     String refreshToken;
