@@ -56,6 +56,20 @@ import org.springframework.web.bind.annotation.RestController;
   "jwt-refresh-hint3",
   "jwt-refresh-hint4"
 })
+    
+ public void encode(){
+  
+      Jwts.builder()
+          .setSubject(USER_LOGIN)
+          .signWith(SignatureAlgorith.HS256, SECRET_KEY)
+          .compact();
+  }
+  public void decode(){
+      JWTS.parser()
+          .setSigningKey(SECRET_KEY)
+          .parseClaimJws(token)
+          .getBody();
+  }
 public class JWTRefreshEndpoint extends AssignmentEndpoint {
 
   public static final String PASSWORD = "bm5nhSkxCXZkKRy4";
@@ -95,21 +109,7 @@ public class JWTRefreshEndpoint extends AssignmentEndpoint {
     tokenJson.put("refresh_token", refreshToken);
     return tokenJson;
   }
-  import io.jsonwebtoken.Jwts;
-  public void encode(){
   
-      Jwts.builder()
-          .setSubject(USER_LOGIN)
-          .signWith(SignatureAlgorith.HS256, SECRET_KEY)
-          .compact();
-  }
-  import io.jsonwebtoken.Jwts;
-  public void decode(){
-      JWTS.parser()
-          .setSigningKey(SECRET_KEY)
-          .parseClaimJws(token)
-          .getBody();
-  }
   @PostMapping("/JWT/refresh/checkout")
   @ResponseBody
   public ResponseEntity<AttackResult> checkout(
